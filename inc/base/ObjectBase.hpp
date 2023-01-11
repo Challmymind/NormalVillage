@@ -8,15 +8,15 @@ typedef struct POSITONSTRUCT {
 
 class ObjectBase {
     public:
-        virtual POSITION GetPosition() {
+        POSITION GetPosition() {
             return POSITION{_position};
         }
-        virtual void ChangePosition(int x, int y){
+        void ChangePosition(int x, int y){
             _position.positionX = x;
             _position.positionY = y;
         }
     private:
-        POSITION _position;
+        POSITION _position = POSITION{0, 0};
 };
 
 #endif
