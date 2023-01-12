@@ -2,10 +2,13 @@
 #include <game/Character.hpp>
 #include <iostream>
 #include <GLFW/glfw3.h>
+#include <Game.hpp>
 
 int main(){
-    Map map(10);
-    Character character(0, 0);
+    
+    Game game;
+    game.Start();
+
 
     // Starts window library.
     glfwInit();
@@ -13,27 +16,14 @@ int main(){
     GLFWwindow * window = glfwCreateWindow(800, 800, "NormalVillage", nullptr, nullptr);
 
     while(!glfwWindowShouldClose(window)) {
-        glfwPollEvents();
-
-        if(glfwGetKey(window, GLFW_KEY_A) == GLFW_RELEASE) {
-            // std::cout << "X" << std::endl;
-            // character.Move(LEFT, &map);
-            // std::cout << character.GetCharacterPosition().positionX << " " << character.GetCharacterPosition().positionY << std::endl;
-        }
-        if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-            // character.Move(RIGHT, &map);
-            // std::cout << character.GetCharacterPosition().positionX << " " << character.GetCharacterPosition().positionY << std::endl;
-        }
-        if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-            // character.Move(UP, &map);
-            // std::cout << character.GetCharacterPosition().positionX << " " << character.GetCharacterPosition().positionY << std::endl;
-        }
-        if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-            // character.Move(DOWN, &map);
-            // std::cout << character.GetCharacterPosition().positionX << " " << character.GetCharacterPosition().positionY << std::endl;
-        }
+        // glfwPollEvents();
+        glfwWaitEventsTimeout(0.8); // this needs to be replaced later
+        game.PollPlayerEvents(window);
+        
+        
 
     }
 
     glfwTerminate();
+
 }

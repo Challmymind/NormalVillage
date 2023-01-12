@@ -9,7 +9,7 @@ Map::Map(int size){
 
     for (int x = 0; x < size; x++){
         for (int y = 0; y < size; y++){
-            _intsMap[x][y] = 0;
+            _intsMap[x][y] = DEFAULTMAPFILL;
         }
     }
 
@@ -24,7 +24,7 @@ Map::~Map(){
     delete [] _intsMap;
 }
 
-int Map::CheckPosition(int x, int y){
+int Map::CheckPosition(int x, int y) const {
 
     if (x < 0 || y < 0){
         return -1;

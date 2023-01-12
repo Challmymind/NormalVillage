@@ -8,14 +8,18 @@ typedef struct POSITONSTRUCT {
 
 class ObjectBase {
     public:
-        POSITION GetPosition() {
+        // Position getter.
+        [[nodiscard]] POSITION GetPosition() const {
             return POSITION{_position};
         }
+    protected:
+        // Position setter.
         void ChangePosition(int x, int y){
             _position.positionX = x;
             _position.positionY = y;
         }
     private:
+        // Position variable.
         POSITION _position = POSITION{0, 0};
 };
 

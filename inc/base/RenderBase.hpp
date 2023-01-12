@@ -8,7 +8,7 @@ class RenderBase {
         // Called before any render call.
         virtual void SetRender() = 0;
         // Renders on screen.
-        virtual void Render() = 0;
+        virtual void Render() const = 0;
         // Callled before closing app.
         virtual void TerminateRender() = 0;
 };

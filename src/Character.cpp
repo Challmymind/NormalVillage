@@ -1,10 +1,20 @@
 #include <game/Character.hpp>
 
-Character::Character(int x, int y) {
+Character::Character(int x, int y){
     this->ChangePosition(x, y);
+    _currentMap = nullptr;
 }
 
-bool Character::Move(Directions direction, Map * map){
+void Character::SetupMap(Map *map, int rules){
+    _currentMap = map;
+    _moveRules = rules;
+}
+
+bool Character::Move(Directions direction){
+
+    if(_currentMap == nullptr){
+        return false;
+    }
 
     POSITION pos = this->GetPosition();
 
@@ -23,13 +33,49 @@ bool Character::Move(Directions direction, Map * map){
             break;
     }
 
-    if(map->CheckPosition(pos.positionX, pos.positionY) != 0) return false;
+    int mapResult = _currentMap->CheckPosition(pos.positionX, pos.positionY);
+
+    if(mapResult < 0) return false;
+
+    if((mapResult | _moveRules) != _moveRules) return false;
 
     this->ChangePosition(pos.positionX, pos.positionY);
 
     return true;
 }
 
-POSITION Character::GetCharacterPosition(){
-    return POSITION(this->GetPosition());
-} 
+bool Character::CheckSurroundings(int instance, int range) const {
+
+    if(_currentMap == nullptr){
+        return false;
+    }
+
+    POSITION pos = this->GetPosition();
+    
+    for(int x = -range; x <= range; x++){
+        for(int y = -range; y <= range; y++){
+            if(_currentMap->CheckPosition(pos.positionX + x, pos.positionY + y) == instance) return true;
+        }
+    }
+    return false;
+}
+
+bool Character::CheckSurroundings(int instance, int * instanceX, int * instanceY, int range) const {
+
+    if(_currentMap == nullptr){
+        return false;
+    }
+
+    POSITION pos = this->GetPosition();
+    
+    for(int x = -range; x <= range; x++){
+        for(int y = -range; y <= range; y++){
+            if(_currentMap->CheckPosition(pos.positionX + x, pos.positionY + y) == instance) {
+                    *instanceX = pos.positionX + x;
+                    *instanceY = pos.positionY + y;
+                    return true;
+                }
+        }
+    }
+    return false;
+}
